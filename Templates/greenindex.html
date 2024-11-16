@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GreenSort</title>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <style>
+        *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+
+    body{
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(to right, #43cea2, #185a9d);
+        color: white;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .container{
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);;
+        width: 90%;
+        max-width: 900px;
+    }
+
+    header h1{
+        font-size: 2.8 rem;
+        color: white;
+        margin-bottom: 25px;
+        text-shadow: 1px 1px 5px rgba(0,0,0,0.4);
+    }
+
+    .live-feed{
+        background-color: rgba(0,0,0,0.3);
+        padding: 25px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .live-feed h2{
+        font-size: 1.8em;
+        color: white;
+        margin-bottom: 15px;
+    }
+
+    .video-stream{
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .result-section{
+        background-color: rgba(0,0,0,0.2);
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 15px;
+    }
+
+    .result-section h3{
+        font-size: 1.5em;
+        color: white;
+    }
+
+    .result-section p{
+        color: #FFD700;
+        font-weight: bold;
+        font-size: 1.2em;
+    } 
+    </style>
+    <script>
+      async function fetchResult() {
+        try {
+          const response = await fetch("/get_result");
+          const data = await response.json();
+          document.getElementById("prediction-result").innerHTML = data.label;
+          document.getElementById("recycling-strategy").innerHTML =
+            data.strategy;
+        } catch (error) {
+          console.error("Error fetching result:", error);
+        }
+      }
+      setInterval(fetchResult, 2000);
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" id="top-right-heading" href="#">EcoXplore</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navbarLinks">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                id="home-beside-navbar"
+                aria-current="page"
+                href="index.html"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Greenshild AI</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Recycle Locator</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Project 3</a>
+            </li>
+          </ul>
+          <form class="d-flex" role="search">
+            <input
+              class="form-control me-2"
+              type="search"
+              id="searchInput"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-success" type="submit">
+              Search
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <header>
+        <h1>GreenSort: Your Personal Waste Segregation Assistant</h1>
+      </header>
+
+      <div class="live-feed">
+        <h2>Live Waste Classification</h2>
+        <img
+          src="{{url_for('video_feed')}}"
+          id="video-stream"
+          class="video-stream"
+          alt="Live Camera Feed..."
+        />
+      </div>
+    </div>
+
+    <div class="result-section">
+      <h3>
+        Prediction Result:
+        <span id="prediction-result">Waiting for Image...</span>
+      </h3>
+      <p id="recycling-strategy">Recycling Strategy will appear here...</p>
+    </div>
+  </body>
+</html>

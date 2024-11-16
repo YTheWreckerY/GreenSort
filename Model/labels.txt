@@ -1,0 +1,14 @@
+0 Nothing
+1 Cardboard-Bio
+2 Glass-Non-Bio
+3 Shoe-Textile
+4 Cloth-Textile
+5 Metals-Recycle
+6 Paper-Bio
+7 Battery-Haz.
+8 Organic Waste
+9 T.brush-Non-bio
+10 Diaper-Sanitary
+11 Mask-Sanitary
+12 Plastic-Non-Bio
+13 Phone-E-waste
